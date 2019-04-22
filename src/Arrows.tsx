@@ -1,5 +1,6 @@
 import * as React from 'react'
 
+import { ArrowLeft, ArrowRight } from './Styled'
 import { stateCallBack } from './types'
 
 interface LeftArrowProps {
@@ -25,12 +26,7 @@ const LeftArrow = ({
       carouselState: getState(),
     })
   }
-  return (
-    <button
-      className="react-multiple-carousel__arrow react-multiple-carousel__arrow--left"
-      onClick={() => previous()}
-    />
-  )
+  return <ArrowLeft onClick={() => previous()} />
 }
 const RightArrow = ({
   customRightArrow,
@@ -43,12 +39,7 @@ const RightArrow = ({
       carouselState: getState(),
     })
   }
-  return (
-    <button
-      className="react-multiple-carousel__arrow react-multiple-carousel__arrow--right"
-      onClick={() => next()}
-    />
-  )
+  return <ArrowRight onClick={() => next()} />
 }
 
 export { LeftArrow, RightArrow }
