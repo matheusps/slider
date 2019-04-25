@@ -39,3 +39,30 @@ export const ArrowRight = styled(Arrow)`
     content: '⏩';
   }
 `
+export const Container = styled.div`
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+`
+
+interface SliderTrackProps {
+  isAnimationAllowed: boolean
+  transition: string
+  shouldRenderOnSSR: boolean
+  transform: number
+}
+
+export const SliderTrack = styled.ul<SliderTrackProps>`
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  will-change: transform;
+  transition: ${props =>
+    props.isAnimationAllowed ? props.transition : 'none'};
+  overflow: ${props => (props.shouldRenderOnSSR ? 'hidden' : 'unset')};
+  transform: ${props => `translate3d(${props.transform}px,0,0)`};
+`

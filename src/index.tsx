@@ -50,8 +50,9 @@ const App = () => {
         swipeable
         draggable
         responsive={responsive}
+        showDots
         ssr
-        slidesToSlide={4}
+        slidesToSlide={1}
         infinite
         containerClass="container-with-dots"
         itemClass=""

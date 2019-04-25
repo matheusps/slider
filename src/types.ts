@@ -79,5 +79,3 @@ export interface CarouselInternalState {
   isSliding?: boolean
   clones: any[]
 }
-
-export default class Carousel extends React.PureComponent<CarouselProps> {}
