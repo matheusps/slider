@@ -1,5 +1,7 @@
 # Adapt Carousel
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/1fb10c4f-6d11-4d4d-8eb2-ec6535f6e73a/deploy-status)](https://app.netlify.com/sites/adapt-carousel/deploys)
+
 Some short description
 
 ## Installing
