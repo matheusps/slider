@@ -1,4 +1,5 @@
 import React, { FC, useReducer, useRef, useEffect } from 'react'
+import csx from 'classnames'
 
 import { SliderProps } from './typings/global'
 import { getItemClientSideWidth, populateSlides } from './utils/index'
@@ -8,6 +9,10 @@ import Arrow from './components/Arrow'
 import SliderTrack from './components/SliderTrack'
 import reducer from './stateReducer'
 import SlideList from './components/SlideList'
+import Thumbnails from './components/Thumbnails'
+import useControlledTimeout from './hooks/useControlledTimeout'
+import useHovering from './hooks/useHovering'
+import useKeyboardArrows from './hooks/useKeyboardArrows'
 
 /**
  * Slider's main component
@@ -24,6 +29,7 @@ const SliderNext: FC<SliderProps> = props => {
     transform: 0,
     containerWidth: 0,
   })
+
   /** Transform Label Text => label-text-items */
   const itemsId: string = `${props
     .label!.toLowerCase()
@@ -112,6 +118,15 @@ const SliderNext: FC<SliderProps> = props => {
     slide(nextPosition!, nextSlides!)
   }
 
+  const { isHovering } = useHovering(containerRef)
+  props.autoplay &&
+    useControlledTimeout(
+      props.autoplay!.timeout,
+      () => populate('next'),
+      props.autoplay!.stopOnHover! && isHovering,
+      [state.currentSlide]
+    )
+
   /** Populate next slides */
   const next = () => {
     populate('next')
@@ -121,6 +136,9 @@ const SliderNext: FC<SliderProps> = props => {
   const prev = () => {
     populate('prev')
   }
+
+  props.keyboardControlled &&
+    useKeyboardArrows(prev, next, [state.domLoaded, state.currentSlide])
 
   /** Go to any slide by index */
   const goToSlide = (slide: number): void => {
@@ -188,6 +206,17 @@ const SliderNext: FC<SliderProps> = props => {
     )
   }
 
+  const renderThumbnails = (): React.ReactNode => {
+    return (
+      <Thumbnails
+        {...state}
+        {...props}
+        goToSlide={goToSlide}
+        controls={itemsId}
+      />
+    )
+  }
+
   /** If should arrows or not, filtering for specific device types */
   const shouldShowArrows =
     props.showArrows &&
@@ -199,27 +228,45 @@ const SliderNext: FC<SliderProps> = props => {
           props.removeArrowOnDeviceType.indexOf(state.deviceType) > -1))
     )
 
+  const hasThumbsleft = props.thumbnails && props.thumbnails.position === 'left'
+
+  const containerClasses = csx(props.classNames!.sliderContainer, 'flex w-100')
+
+  const sliderContainerClasses = csx(
+    props.classNames!.sliderContainer,
+    hasThumbsleft && 'order-1',
+    'flex items-center relative overflow-hidden'
+  )
+
   return (
     <section
-      className={`${
-        props.classNames!.container
-      } flex items-center relative overflow-hidden`}
-      ref={containerRef}
       role="region"
       aria-roledescription="carousel"
       aria-label={props.label}
+      className={containerClasses}
     >
-      <SliderTrack
-        id={itemsId}
-        className={props.classNames!.slider}
-        transform={state.transform}
-        transition={props.transition!}
+      <div
+        className={sliderContainerClasses}
+        style={{
+          width: props.thumbnails
+            ? `calc(100% - ${props.thumbnails.width})`
+            : `100%`,
+        }}
+        ref={containerRef}
       >
-        <SlideList {...state} {...props} />
-      </SliderTrack>
-      {shouldShowArrows && renderLeftArrow()}
-      {shouldShowArrows && renderRightArrow()}
-      {props.showDots && renderDotsList()}
+        <SliderTrack
+          id={itemsId}
+          className={props.classNames!.slider}
+          transform={state.transform}
+          transition={props.transition!}
+        >
+          <SlideList {...state} {...props} />
+        </SliderTrack>
+        {shouldShowArrows && renderLeftArrow()}
+        {shouldShowArrows && renderRightArrow()}
+        {props.showDots && renderDotsList()}
+      </div>
+      {props.thumbnails && renderThumbnails()}
     </section>
   )
 }
@@ -239,19 +286,24 @@ SliderNext.defaultProps = {
   showArrows: true,
   showDots: true,
   classNames: {
-    slider: '',
     container: '',
+    sliderContainer: '',
+    slider: '',
     item: '',
     leftArrow: '',
     rightArrow: '',
     dotList: '',
     dot: '',
+    thumbnails: '',
+    thumbnail: '',
+    selectedThumbnail: '',
   },
   transition: {
     speed: 400,
     delay: 0,
     timing: 'ease-in-out',
   },
+  keyboardControlled: false,
 }
 
 export default SliderNext
