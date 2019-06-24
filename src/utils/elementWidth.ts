@@ -1,4 +1,4 @@
-import { responsiveType } from '../typings/global'
+import { responsiveType } from '../typings'
 
 const getWidthFromDeviceType = (
   deviceType: string,

@@ -1,4 +1,4 @@
-import { SliderState } from './typings/global'
+import { SliderState } from '../typings'
 
 type LoadAction = {
   type: 'load'
@@ -32,7 +32,7 @@ const reducer = (state: SliderState, action: Action) => {
       return {
         ...state,
         domLoaded: true,
-        ...action.payload,
+        ...action.payload
       }
     case 'loadAndCorrect':
       return {
@@ -44,12 +44,12 @@ const reducer = (state: SliderState, action: Action) => {
         itemWidth: action.payload.itemWidth,
         transform: action.payload.shouldCorrectItemPosition
           ? -action.payload.itemWidth * state.currentSlide
-          : state.transform,
+          : state.transform
       }
     case 'slide':
       return {
         ...state,
-        ...action.payload,
+        ...action.payload
       }
     default:
       return state

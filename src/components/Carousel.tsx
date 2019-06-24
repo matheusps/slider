@@ -1,18 +1,18 @@
 import React, { FC, useReducer, useRef, useEffect } from 'react'
 import csx from 'classnames'
 
-import { SliderProps } from './typings/global'
-import { getItemClientSideWidth, populateSlides } from './utils/index'
+import { getItemClientSideWidth, populateSlides } from '../utils/index'
 
-import Dots from './components/Dots'
-import Arrow from './components/Arrow'
-import Track from './components/Track'
+import Dots from './Dots'
+import Arrow from './Arrow'
+import Track from './Track'
 import reducer from './stateReducer'
-import SlideList from './components/SlideList'
-import Thumbnails from './components/Thumbnails'
-import useControlledTimeout from './hooks/useControlledTimeout'
-import useHovering from './hooks/useHovering'
-import useKeyboardArrows from './hooks/useKeyboardArrows'
+import SlideList from './SlideList'
+import Thumbnails from './Thumbnails'
+import useControlledTimeout from '../hooks/useControlledTimeout'
+import useHovering from '../hooks/useHovering'
+import useKeyboardArrows from '../hooks/useKeyboardArrows'
+import { SliderProps } from '../typings'
 
 /**
  * Slider's main component
@@ -27,7 +27,7 @@ const Carousel: FC<SliderProps> = props => {
     deviceType: '',
     domLoaded: false,
     transform: 0,
-    containerWidth: 0,
+    containerWidth: 0
   })
 
   /** Transform Label Text => label-text-items */
@@ -43,7 +43,7 @@ const Carousel: FC<SliderProps> = props => {
      */
     const setNewState = (shouldCorrectItemPosition: boolean) => {
       const {
-        elements: { visible },
+        elements: { visible }
       } = props
       visible &&
         Object.keys(visible).forEach(item => {
@@ -63,16 +63,16 @@ const Carousel: FC<SliderProps> = props => {
                   deviceType: item,
                   containerWidth,
                   itemWidth,
-                  shouldCorrectItemPosition,
-                },
+                  shouldCorrectItemPosition
+                }
               })
             } else {
               dispatch({
                 type: 'load',
                 payload: {
                   slidesToShow: items,
-                  deviceType: item,
-                },
+                  deviceType: item
+                }
               })
             }
           }
@@ -99,8 +99,8 @@ const Carousel: FC<SliderProps> = props => {
       type: 'slide',
       payload: {
         transform: transform,
-        currentSlide: currentSlide,
-      },
+        currentSlide: currentSlide
+      }
     })
   }
 
@@ -147,8 +147,8 @@ const Carousel: FC<SliderProps> = props => {
       type: 'slide',
       payload: {
         transform: -(itemWidth * slide),
-        currentSlide: slide,
-      },
+        currentSlide: slide
+      }
     })
   }
 
@@ -230,12 +230,11 @@ const Carousel: FC<SliderProps> = props => {
 
   const hasThumbsleft = props.thumbnails && props.thumbnails.position === 'left'
 
-  const containerClasses = csx(props.classNames!.sliderContainer, 'flex w-100')
+  const containerClasses = csx(props.classNames!.sliderContainer)
 
   const sliderContainerClasses = csx(
     props.classNames!.sliderContainer,
-    hasThumbsleft && 'order-1',
-    'flex items-center relative overflow-hidden'
+    hasThumbsleft && 'order-1'
   )
 
   return (
@@ -244,13 +243,21 @@ const Carousel: FC<SliderProps> = props => {
       aria-roledescription="carousel"
       aria-label={props.label}
       className={containerClasses}
+      style={{
+        display: 'flex',
+        width: '100%'
+      }}
     >
       <div
         className={sliderContainerClasses}
         style={{
+          display: 'flex',
+          alignItems: 'center',
+          position: 'relative',
+          overflow: 'hidden',
           width: props.thumbnails
             ? `calc(100% - ${props.thumbnails.width})`
-            : `100%`,
+            : `100%`
         }}
         ref={containerRef}
       >
@@ -277,10 +284,10 @@ Carousel.defaultProps = {
     visible: {
       every: {
         breakpoint: { max: 3840, min: 0 },
-        items: 1,
-      },
+        items: 1
+      }
     },
-    toPass: 1,
+    toPass: 1
   },
   infinite: true,
   showArrows: true,
@@ -296,14 +303,14 @@ Carousel.defaultProps = {
     dot: '',
     thumbnails: '',
     thumbnail: '',
-    selectedThumbnail: '',
+    selectedThumbnail: ''
   },
   transition: {
     speed: 400,
     delay: 0,
-    timing: 'ease-in-out',
+    timing: 'ease-in-out'
   },
-  keyboardControlled: false,
+  keyboardControlled: false
 }
 
 export default Carousel

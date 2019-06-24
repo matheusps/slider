@@ -14,9 +14,11 @@ interface Props {
 
 const Arrow: FC<Props> = props => {
   const { custom, orientation, action, className, controls, disabled } = props
+  const style = orientation === 'left' ? { left: '1rem' } : { right: '1rem' }
   return (
     <Clickable
-      className={csx(className, orientation === 'left' ? 'left-1' : 'right-1')}
+      className={className}
+      style={style}
       onClick={() => action()}
       aria-controls={controls}
       aria-label={`${orientation === 'left' ? 'Previous' : 'Next'} Slide`}
