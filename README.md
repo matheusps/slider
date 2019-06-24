@@ -1,50 +1,40 @@
 # Adapt Carousel
 
-## Description
+Some short description
 
-The SliderNext is the upcoming version of VTEX Slider. The main difference is that dots, arrows and slide transitions are now handled by Slider instead of its parent component.
+## Installing
 
-## Table of Contents
+Simple install it as a module
 
-- [Usage](#usage)
-  - [Basic](#basic)
-  - [SSR](#ssr)
-  - [Configuration](#configuration)
-- [Upcoming](#upcoming)
-
-## Usage
-
-To import it you can add to you `manifest.json` the following:
-
-```json
-{
-  "dependencies": {
-    "vtex.slider": "0.x"
-  }
-}
+```bash
+$ yarn add adapt-carousel
 ```
 
-And then in your component you can import the components exported from the slider:
+or
 
-```javascript
-import { SliderNext } from 'vtex.slider'
+```bash
+$ npm install adapt-carousel
 ```
 
 ### Basic
 
-The simplistic way of using `SlidexNext` is:
+The simplistic way of using `Adapt Carousel` is:
 
-```javascript
-import Product from './Product'
+```typescript
+import React from 'react'
+import { Carousel } from 'adapt-carousel'
 
-const products = [{ name: 'name', price: 50 }, ... ]
-
-<SliderNext>
-  { products.map(product => <Product {...product} />) }
-</SliderNext>
+const YourComponent: React.FC = () => {
+  return (
+    <Carousel>
+      <img src="url1" />
+      <img src="url2" />
+      <img src="url3" />
+      <img src="url4" />
+    </Carousel>
+  )
+}
 ```
-
-Check [configuration](#configuration) to see every prop that `SliderNext` can receive.
 
 ### Resposive
 
@@ -73,7 +63,8 @@ interface SliderProps {
 So, on your component you will use it like:
 
 ```javascript
-import Product from './Product'
+import { Carousel } from 'adapt-carousel'
+import Image from './Image'
 
 const visibleElements = {
   desktop: {
@@ -88,40 +79,40 @@ const visibleElements = {
   },
 }
 
-const products = [
-  { name: 'name', price: 50 },
+const slides = [
+  { url: '...' },
   // ...
 ]
 
-<SliderNext
+<Carousel
   elements={{
     visible: visibleElements,
     toPass: 'visible' // will pass every visible element each arrow click
   }}
 >
-  { products.map(product => <Product {...product} />) }
-</SliderNext>
+  { slides.map(slide => <Image {...slide} />) }
+</Carousel>
 ```
 
 ### Configuration
 
-| Prop name                 | Type                  | isRequired | defaultValue  | Description                                     |
-| ------------------------- | --------------------- | ---------- | ------------- | ----------------------------------------------- |
-| `label`                   | `String`              | 🚫         | 'VTEX Slider' | Aria label of slider                            |
-| `deviceType`              | `String`              | 🚫         | 🚫            | The device type                                 |
-| `elements`                | `SliderElements`      | ✅         | -             | Elements props                                  |
-| `children`                | `Array<Node!>`        | ✅         | 🚫            | Elements to render                              |
-| `showArrows`              | `Boolean`             | 🚫         | true          | If should show arrows                           |
-| `showDots`                | `Boolean`             | 🚫         | true          | If should show dots                             |
-| `removeArrowOnDeviceType` | `Array<String!>`      | 🚫         | 🚫            | Which device types that arrows should be hidden |
-| `customLeftArrow`         | `ComponentType<any>!` | 🚫         | 🚫            | Custom arrow on left                            |
-| `customRightArrow`        | `ComponentType<any>!` | 🚫         | 🚫            | Custom arrow on right                           |
-| `customDot`               | `ComponentType<any>!` | 🚫         | 🚫            | Custom dots                                     |
-| `infinite`                | `Boolean`             | 🚫         | true          | Whatever is infinite mode or not                |
-| `classNames`              | `ClassNames`          | 🚫         | -             | Custom classes                                  |
-| `thumbnails`              | `Thumbnails`          | 🚫         | -             | Props for thumbnails                            |
-| `autoplay`                | `AutoplayProps`       | 🚫         | -             | Props for autoplay                              |
-| `keyboardControlled`      | `Boolean`             | 🚫         | false         | If is controlled via keyboard arrows or not     |
+| Prop name                 | Type                  | isRequired | defaultValue     | Description                                     |
+| ------------------------- | --------------------- | ---------- | ---------------- | ----------------------------------------------- |
+| `label`                   | `String`              | 🚫         | 'Adapt Carousel' | Aria label of slider                            |
+| `deviceType`              | `String`              | 🚫         | 🚫               | The device type                                 |
+| `elements`                | `SliderElements`      | ✅         | -                | Elements props                                  |
+| `children`                | `Array<Node!>`        | ✅         | 🚫               | Elements to render                              |
+| `showArrows`              | `Boolean`             | 🚫         | true             | If should show arrows                           |
+| `showDots`                | `Boolean`             | 🚫         | true             | If should show dots                             |
+| `removeArrowOnDeviceType` | `Array<String!>`      | 🚫         | 🚫               | Which device types that arrows should be hidden |
+| `customLeftArrow`         | `ComponentType<any>!` | 🚫         | 🚫               | Custom arrow on left                            |
+| `customRightArrow`        | `ComponentType<any>!` | 🚫         | 🚫               | Custom arrow on right                           |
+| `customDot`               | `ComponentType<any>!` | 🚫         | 🚫               | Custom dots                                     |
+| `infinite`                | `Boolean`             | 🚫         | true             | Whatever is infinite mode or not                |
+| `classNames`              | `ClassNames`          | 🚫         | -                | Custom classes                                  |
+| `thumbnails`              | `Thumbnails`          | 🚫         | -                | Props for thumbnails                            |
+| `autoplay`                | `AutoplayProps`       | 🚫         | -                | Props for autoplay                              |
+| `keyboardControlled`      | `Boolean`             | 🚫         | false            | If is controlled via keyboard arrows or not     |
 
 **SliderElements Type**
 
@@ -166,11 +157,3 @@ const products = [
 | ------------- | --------- | ---------- | ------------ | ------------------------------------------------ |
 | `timeout`     | `Number`  | ✅         | 🚫           | Time duration in ms                              |
 | `stopOnHover` | `Boolean` | 🚫         | 🚫           | If should stop the timeout by hovering the slide |
-
-## Upcoming
-
-Features that will be added soon:
-
-- Content Loader (Skeleton)
-- Drag and Swipe
-- Create an infinite loop impression (Circular Queue).
