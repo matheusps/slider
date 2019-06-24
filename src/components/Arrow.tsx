@@ -1,7 +1,7 @@
 import React, { memo, FC, ComponentType } from 'react'
-import csx from 'classnames'
 
 import Clickable from './Clickable'
+import Icon from './Icon'
 
 interface Props {
   custom?: ComponentType<any>
@@ -24,7 +24,7 @@ const Arrow: FC<Props> = props => {
       aria-label={`${orientation === 'left' ? 'Previous' : 'Next'} Slide`}
       disabled={disabled}
     >
-      {custom || <span>Arrow</span>}
+      {custom || <Icon type="chevron" orientation={orientation} />}
     </Clickable>
   )
 }
