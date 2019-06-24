@@ -7,7 +7,7 @@ interface Props extends Div {
   transition: transitionType
 }
 
-const SliderTrack: FC<Props> = ({
+const Track: FC<Props> = ({
   children,
   style,
   className,
@@ -32,4 +32,4 @@ const SliderTrack: FC<Props> = ({
   </div>
 )
 
-export default SliderTrack
+export default Track

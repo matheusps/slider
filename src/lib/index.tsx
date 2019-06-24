@@ -6,7 +6,7 @@ import { getItemClientSideWidth, populateSlides } from './utils/index'
 
 import Dots from './components/Dots'
 import Arrow from './components/Arrow'
-import SliderTrack from './components/SliderTrack'
+import Track from './components/Track'
 import reducer from './stateReducer'
 import SlideList from './components/SlideList'
 import Thumbnails from './components/Thumbnails'
@@ -17,7 +17,7 @@ import useKeyboardArrows from './hooks/useKeyboardArrows'
 /**
  * Slider's main component
  */
-const SliderNext: FC<SliderProps> = props => {
+const Carousel: FC<SliderProps> = props => {
   const containerRef = useRef<HTMLDivElement>(null)
   const [state, dispatch] = useReducer(reducer, {
     itemWidth: 0,
@@ -254,14 +254,14 @@ const SliderNext: FC<SliderProps> = props => {
         }}
         ref={containerRef}
       >
-        <SliderTrack
+        <Track
           id={itemsId}
           className={props.classNames!.slider}
           transform={state.transform}
           transition={props.transition!}
         >
           <SlideList {...state} {...props} />
-        </SliderTrack>
+        </Track>
         {shouldShowArrows && renderLeftArrow()}
         {shouldShowArrows && renderRightArrow()}
         {props.showDots && renderDotsList()}
@@ -271,7 +271,7 @@ const SliderNext: FC<SliderProps> = props => {
   )
 }
 
-SliderNext.defaultProps = {
+Carousel.defaultProps = {
   label: 'Carousel',
   elements: {
     visible: {
@@ -306,4 +306,4 @@ SliderNext.defaultProps = {
   keyboardControlled: false,
 }
 
-export default SliderNext
+export default Carousel
