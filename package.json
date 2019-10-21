@@ -8,11 +8,11 @@
     "@types/react-dom": "^16.8.3",
     "docz": "^1.2.0",
     "docz-theme-default": "^1.2.0",
-    "typescript": "3.3.3",
+    "typescript": "3.6.4",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "classnames": "2.2.6",
-    "@types/classnames": "2.2.8"
+    "@types/classnames": "2.2.9"
   },
   "peerDependencies": {
     "react": "16.8.6",
